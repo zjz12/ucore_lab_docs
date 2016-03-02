@@ -175,23 +175,40 @@ GDT内容的设置格式？初始映射的基址和长度？特权级的设置�
 - CPL为当前正在执行的代码所在的段的特权级；RPL为段选择子的属性，说明了进程对段访问的特权级；DPL规定访问该段的权限级别，要求DPL >= max{ CPL, RPL}  
 - CPL在CS寄存器的低两位；RPL是selector中的bit 0和bit 1位组合所得的值；DPL存储在段描述符的第13、14bit  
 - RPL ≤ CPL ,  DPL >= max{ CPL, RPL}  
-- challenge用户态 user/hello.c：
+- challenge
+    用户态：user/hello.c：
 
- ```C
- #include <stdio.h>
- #include <ulib.h>
- int
- main(void) {
-    cprintf("Hello world!!.\n");
-    cprintf("I am process %d.\n", getpid());
-    cprintf("hello pass.\n");
-    uint32_t cs = 0;
-    asm volatile("movl %%cs, %0\n" : "=r"(cs));
-    cs &= 3;
-    cprintf("user: %d\n", cs); 
-    return 0;
- }
- ```
+    ```C
+    #include <stdio.h>
+    #include <ulib.h>
+    int
+    main(void) {
+       cprintf("Hello world!!.\n");
+       cprintf("I am process %d.\n", getpid());
+       cprintf("hello pass.\n");
+       uint32_t cs = 0;
+       asm volatile("movl %%cs, %0\n" : "=r"(cs));
+       cs &= 3;
+       cprintf("user: %d\n", cs); 
+       return 0;
+    }
+    ```
+   
+    内核态：kern/syscall/syscall.c：
+
+    ```C
+    static int
+    sys_write(uint32_t arg[]) {
+        uint32_t cs = 0;
+        asm volatile("movl %%cs, %0\n" : "=r"(cs));
+        cs &= 3;
+        cprintf("kern: %d\n", cs); 
+        int fd = (int)arg[0];
+        void *base = (void *)arg[1];
+        size_t len = (size_t)arg[2];
+        return sysfile_write(fd, base, len);
+    }    
+    ``` 
 
 >  
 
