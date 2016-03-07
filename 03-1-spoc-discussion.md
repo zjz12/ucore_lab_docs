@@ -30,7 +30,7 @@ t_block zfind_block(t_block *last, size_t size) {
 /*开辟新的block*/
 t_block zextend_heap(t_block last, size_t s) {
     t_block b;
-    (void *)b = sbrk(0);
+    b = (t_block)sbrk(0);
     if(sbrk(BLOCK_SIZE + s) == (void *)-1)
         return NULL;
     b->size = s;
@@ -49,6 +49,8 @@ void zsplit_block(t_block b, size_t s) {
     new_block = (t_block) (b->data + s);
     new_block->size = b->size - s - BLOCK_SIZE ;
     new_block->next = b->next;
+    if(b->next)
+        b->next->prev = new_block;
     new_block->prev = b;
     new_block->free = 1;
     b->size = s;
@@ -56,7 +58,7 @@ void zsplit_block(t_block b, size_t s) {
 }
 
 size_t align8(size_t s) {
-    if(s & 0x7 == 0)        //若已经8bit对齐
+    if((s & 0x7 ) == 0)        //若已经8bit对齐
         return s;
     return ((s >> 3) + 1) << 3;
 }
@@ -75,7 +77,7 @@ void * zmalloc(size_t size) {
             if ((b->size - s) >= ( BLOCK_SIZE + 8))
                 zsplit_block(b, s);
             b->free = 0;
-            b->prev = last;
+            //b->prev = last;
         } else {
             /* 没有合适的block，开辟一个新的 */
             b = zextend_heap(last, s);
@@ -93,7 +95,7 @@ void * zmalloc(size_t size) {
 
 t_block zget_block(void *p) {
     char *tmp;
-    (void *)tmp = p;
+    tmp = (char *)p;
     return (t_block) (p = tmp -= BLOCK_SIZE);
 }
  /*检查地址合法性*/
@@ -120,17 +122,34 @@ void zfree(void *p) {
     if(zvalid_addr(p)) {
         b = zget_block(p);
         b->free = 1;
-        if(b->prev && b->prev->free)
+        while(b->prev && b->prev->free)
             b = zfusion(b->prev);
-        if(b->next)
+        while(b->next && b->next->free)
             zfusion(b);
-        else {
-            if(b->prev)
-                b->prev->prev = NULL;
-            else
+        if(!b->next) {
+            if(!b->prev)
+                //b->prev->prev = NULL;
+            //else
                 first_block = NULL;
             brk(b);
         }
     }
 }
+
+int  main(){
+    char *a, *b, *c, *d, *e, *f;
+    a = (char *)zmalloc(100);
+    b = (char *)zmalloc(112);
+    c = (char *)zmalloc(40);
+    zfree(b);
+    d = (char *)zmalloc(40);
+    e = (char *)zmalloc(80);
+    f = (char *)zmalloc(80);
+    zfree(e);
+    zfree(c);
+    c = (char *)zmalloc(100);
+
+    return 0;
+}
 ```
+参考资料：[id]:<http://blog.codinglabs.org/articles/a-malloc-tutorial.html#321-数据结构> "http://blog.codinglabs.org/articles/a-malloc-tutorial.html#321-数据结构"
