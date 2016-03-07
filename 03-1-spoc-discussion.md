@@ -13,13 +13,13 @@
 
 typedef struct s_block *t_block;
 struct s_block {
-    size_t size;  /* 数据区大小 */
-    t_block prev; /* 指向上个块的指针 */
-    t_block next; /* 指向下个块的指针 */
-    int free;     /* 是否是空闲块,1表示空闲 */
-    int padding;  /* 填充4字节，保证meta块长度为8的倍数 */
-    //void *ptr;    /* Magic pointer，指向data */
-    char data[1];  /* 这是一个虚拟字段，表示数据块的第一个字节，长度不应计入meta */
+    size_t size;      /* 数据区大小 */
+    t_block prev;     /* 指向上个块的指针 */
+    t_block next;     /* 指向下个块的指针 */
+    int free;         /* 是否是空闲块,1表示空闲 */
+    int padding;      /* 填充4字节，保证meta块长度为8的倍数 */
+    //void *ptr;      /* Magic pointer，指向data */
+    char data[1];     /* 这是一个虚拟字段，表示数据块的第一个字节，长度不应计入meta */
 };
 
 void *first_block = NULL;
