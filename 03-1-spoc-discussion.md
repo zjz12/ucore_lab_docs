@@ -152,4 +152,4 @@ int  main(){
     return 0;
 }
 ```
-参考资料：<http://blog.codinglabs.org/articles/a-malloc-tutorial.html#321-数据结构> "http://blog.codinglabs.org/articles/a-malloc-tutorial.html#321-数据结构"
+参考资料：<http://blog.codinglabs.org/articles/a-malloc-tutorial.html#321-数据结构>
