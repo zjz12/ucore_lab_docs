@@ -23,6 +23,7 @@ t_block find_block(t_block *last, size_t size) {
 }
 #define BLOCK_SIZE 40//24 /* 由于存在虚拟的data字段，sizeof不能正确计算meta长度，这里手工设置 */
  
+/*开辟新的block*/
 t_block extend_heap(t_block last, size_t s) {
     t_block b;
     b = sbrk(0);
@@ -35,6 +36,7 @@ t_block extend_heap(t_block last, size_t s) {
     b->free = 0;
     return b;
 }
+/*分裂block*/
 void split_block(t_block b, size_t s) {
     t_block new;
     new = b->data + s;
@@ -83,12 +85,13 @@ void *malloc(size_t size) {
     }
     return b->data;
 }
+
 t_block get_block(void *p) {
     char *tmp;  
     tmp = p;
     return (p = tmp -= BLOCK_SIZE);
 }
- 
+ /*检查地址合法性*/
 int valid_addr(void *p) {
     if(first_block) {
         if(p > first_block && p < sbrk(0)) {
@@ -97,6 +100,7 @@ int valid_addr(void *p) {
     }
     return 0;
 }
+/*合并相邻空闲块*/
 t_block fusion(t_block b) {
     if (b->next && b->next->free) {
         b->size += BLOCK_SIZE + b->next->size;
