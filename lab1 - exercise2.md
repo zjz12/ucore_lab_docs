@@ -54,11 +54,12 @@ b *0x7c00
 c
 x /10i $pc
 	```
-	b. 将Makefile中qemu修改如下：
+	b. 将Makefile中qemu修改如下,用来将运行的汇编指令保存在q.log中：
 	```
 qemu: $(UCOREIMG)
 	$(V)$(QEMU) -no-reboot -d in_asm -D q.log -parallel stdio -hda $< -serial null
 	```
+	c. 执行``make qemu``后得到q.log,得到部分结果如下：
 	```
 IN: 
 0x00007c00:  cli    
