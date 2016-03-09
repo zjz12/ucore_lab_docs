@@ -10,15 +10,15 @@
 	target remote :1234
 	```
 	
-	2 随后执行debug，在gdb调试界面下执行``si``命令  
-	3 在gdb界面下，可通过如下命令来看BIOS的代码  
+	b. 随后执行debug，在gdb调试界面下执行``si``命令  
+	c. 在gdb界面下，可通过如下命令来看BIOS的代码  
 	
 	```
  	x /2i $pc  //显示当前eip处的2条汇编指令
  	```
  	
-2. 在初始化位置0x7c00设置实地址断点,测试断点正常。
-	1. 修改lab1/tools/gdbinit，内容为
+2. 在初始化位置0x7c00设置实地址断点,测试断点正常。  
+	a. 修改lab1/tools/gdbinit，内容为  
 	```
 	file bin/kernel
 	target remote :1234
@@ -30,7 +30,8 @@
 	x /2i $pc
 	set architecture i386
 	```
-	2. ``make debug``后得到如下结果：
+	
+	b. ``make debug``后得到如下结果：  
 	```
 	Breakpoint 2 at 0x7c00
 	Breakpoint 2, 0x00007c00 in ?? ()
@@ -38,5 +39,6 @@
    	0x7c01:      cld    
 	The target architecture is assumed to be i386
 	```
+	
 3. 从0x7c00开始跟踪代码运行,将单步跟踪反汇编得到的代码与bootasm.S和 bootblock.asm进行比较。
 4. 自己找一个bootloader或内核中的代码位置，设置断点并进行测试。
