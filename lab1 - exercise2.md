@@ -20,7 +20,7 @@
  	```
  	
 2. 在初始化位置0x7c00设置实地址断点,测试断点正常。  
-	a. 修改lab1/tools/gdbinit，内容为  
+	a. 修改lab1/tools/gdbinit，内容为：
 	```
 	file bin/kernel
 	target remote :1234
