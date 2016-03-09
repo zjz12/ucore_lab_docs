@@ -129,3 +129,36 @@ IN:
 	```
 	将上述代码与bootasm.S和bootblock.asm比较，发现汇编指令相同。
 4. 自己找一个bootloader或内核中的代码位置，设置断点并进行测试。
+	a. 设置断点
+	```
+	break clock_init
+	```
+	b. 执行``make debug``，结果如下：
+	```
+	
+	   ┌──kern/driver/clock.c──────────────────────────────────────────────────────┐
+   │35          outb(TIMER_MODE, TIMER_SEL0 | TIMER_RATEGEN | TIMER_16BIT);    │
+   │36          outb(IO_TIMER1, TIMER_DIV(100) % 256);                         │
+   │37          outb(IO_TIMER1, TIMER_DIV(100) / 256);                         │
+   │38                                                                         │
+   │39          // initialize time counter 'ticks' to zero                     │
+  >│40          ticks = 0;                                                     │
+   │41                                                                         │
+   │42          cprintf("++ setup timer interrupts\n");                        │
+   │43          pic_enable(IRQ_TIMER);                                         │
+   │44      }                                                                  │
+   │45                                                                         │
+   │46                                                                         │
+   │47                                                                         │
+   └───────────────────────────────────────────────────────────────────────────┘
+remote Thread 1 In: clock_init                          Line: 40   PC: 0x100cdd 
+(gdb) continue
+Continuing.
+
+Breakpoint 3, clock_init () at libs/x86.h:57
+(gdb) next
+(gdb) p ticks
+$2 = 0
+(gdb) 
+	```
+
