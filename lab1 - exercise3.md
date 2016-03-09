@@ -2,7 +2,7 @@
 
 BIOS将通过读取硬盘主引导扇区到内存，并转跳到对应内存中的位置执行bootloader。请分析bootloader是如何完成从实模式进入保护模式的。  
   ```
-  #include <asm.h>
+#include <asm.h>
 
 # Start the CPU: switch to 32-bit protected mode, jump into C.
 # The BIOS loads this code from the first sector of the hard disk into
