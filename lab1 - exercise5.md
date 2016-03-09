@@ -21,43 +21,35 @@ ebp:0x00007bf8 eip:0x00007d73 args:0xc031fcfa 0xc08ed88e 0x64e4d08e 0xfa7502a8
 <unknow>: -- 0x00007d72 –
 ……
 ```
+
 请完成实验，看看输出是否与上述显示大致一致，并解释最后一行各个数值的含义。  
-实验代码如下：  
-    ```
-void
-print_stackframe(void) {
-     /* LAB1 YOUR CODE : STEP 1 */
-     /* (1) call read_ebp() to get the value of ebp. the type is (uint32_t);
-      * (2) call read_eip() to get the value of eip. the type is (uint32_t);
-      * (3) from 0 .. STACKFRAME_DEPTH
-      *    (3.1) printf value of ebp, eip
-      *    (3.2) (uint32_t)calling arguments [0..4] = the contents in address (unit32_t)ebp +2 [0..4]
-      *    (3.3) cprintf("\n");
-      *    (3.4) call print_debuginfo(eip-1) to print the C calling function name and line number, etc.
-      *    (3.5) popup a calling stackframe
-      *           NOTICE: the calling funciton's return addr eip  = ss:[ebp+4]
-      *                   the calling funciton's ebp = ss:[ebp]
-      */
-    uint32_t ebp, eip;
-    uint32_t *args;
+实验代码如下：
+    ```C
+    void
+    print_stackframe(void) {
+        uint32_t ebp, eip;
+        uint32_t *args;
     
-    ebp = read_ebp();
-    eip = read_eip();
-    int i, j;
-    for (i = 0; ebp != 0 && i < STACKFRAME_DEPTH;i++) {
-        cprintf("ebp:0x%08x eip:0x%08x args:", ebp, eip);
-        args = (uint32_t *)ebp + 2;
-        for (j = 0; j < 4; j++) {
+        ebp = read_ebp();
+        eip = read_eip();
+        int i, j;
+        for (i = 0; ebp != 0 && i < STACKFRAME_DEPTH;i++) {
+            cprintf("ebp:0x%08x eip:0x%08x args:", ebp, eip);
+            args = (uint32_t *)ebp + 2;
+            for (j = 0; j < 4; j++) {
             cprintf("0x%08x ", args[j]);
         }
         cprintf("\n");
         print_debuginfo(eip - 1);
         eip = ((uint32_t *)ebp)[1];
         ebp = ((uint32_t *)ebp)[0];
+        }
     }
-}
     ```
-执行make qemu后得到以下输出：  
+    
+执行make qemu后得到以下输出：
+
+
     ```
 moocos-> make qemu
 + cc kern/init/init.c
@@ -127,6 +119,7 @@ ebp:0x00007bf8 eip:0x00007d68 args:0xc031fcfa 0xc08ed88e 0x64e4d08e 0xfa7502a8
     <unknow>: -- 0x00007d67 --
 ++ setup timer interrupts
     ```
+    
 提示：可阅读小节“函数堆栈”，了解编译器如何建立函数调用关系的。在完成lab1编译后，查看lab1/obj/bootblock.asm，了解bootloader源码与机器码的语句和地址等的对应关系；查看lab1/obj/kernel.asm，了解 ucore OS源码与机器码的语句和地址等的对应关系。
 
 要求完成函数kern/debug/kdebug.c::print_stackframe的实现，提交改进后源代码包（可以编译执行），并在实验报告中简要说明实现过程，并写出对上述问题的回答。
