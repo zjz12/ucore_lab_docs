@@ -32,12 +32,12 @@ PT6..0:页表的物理基址>>5
 我们组选取了第一组虚拟地址，得到结果如下：
 ```
 Virtual Address 6c74:
-  --> pde index:0xa0  pde contents:(valid 1, pfn 0x20)
-    --> pte index:0xe1  pte contents:(valid 1, pfn 0x61)
+  --> pde index:0x1b  pde contents:(valid 1, pfn 0x20)
+    --> pte index:0x3  pte contents:(valid 1, pfn 0x61)
       --> Translates to Physical Address 0xc34 --> Value: 1a
       
 Virtual Address 6b22:
-  --> pde index:0xd2  pde contents:(valid 1, pfn 0x52)
-    --> pte index:0xc7  pte contents:(valid 1, pfn 0x47)
+  --> pde index:0xd1a  pde contents:(valid 1, pfn 0x52)
+    --> pte index:0x19  pte contents:(valid 1, pfn 0x47)
       --> Translates to Physical Address 0x8e2 --> Value: 1a
 ```
