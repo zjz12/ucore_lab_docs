@@ -89,3 +89,4 @@ protcseg:
     lgdt gdtdesc  
     ```
 * 如何使能和进入保护模式
+  - 见上 
