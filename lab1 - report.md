@@ -44,65 +44,75 @@
 	//生成kdebug.o
 	```
 	+ cc kern/debug/kdebug.c
-gcc -Ikern/debug/ -fno-builtin -Wall -ggdb -m32 -gstabs -nostdinc  -fno-stack-protector -Ilibs/ -Ikern/debug/ -Ikern/driver/ -Ikern/trap/ -Ikern/mm/ -c kern/debug/kdebug.c -o obj/kern/debug/kdebug.o
-```
-//生成kmonitor.o
-```
-+ cc kern/debug/kmonitor.c
-gcc -Ikern/debug/ -fno-builtin -Wall -ggdb -m32 -gstabs -nostdinc  -fno-stack-protector -Ilibs/ -Ikern/debug/ -Ikern/driver/ -Ikern/trap/ -Ikern/mm/ -c kern/debug/kmonitor.c -o obj/kern/debug/kmonitor.o
-```
-//生成panic.o
-```
-+ cc kern/debug/panic.c
-gcc -Ikern/debug/ -fno-builtin -Wall -ggdb -m32 -gstabs -nostdinc  -fno-stack-protector -Ilibs/ -Ikern/debug/ -Ikern/driver/ -Ikern/trap/ -Ikern/mm/ -c kern/debug/panic.c -o obj/kern/debug/panic.o
-```
-//生成clock.o
-```
-+ cc kern/driver/clock.c
-gcc -Ikern/driver/ -fno-builtin -Wall -ggdb -m32 -gstabs -nostdinc  -fno-stack-protector -Ilibs/ -Ikern/debug/ -Ikern/driver/ -Ikern/trap/ -Ikern/mm/ -c kern/driver/clock.c -o obj/kern/driver/clock.o
-```
-//生成console.o
-```
-+ cc kern/driver/console.c
-gcc -Ikern/driver/ -fno-builtin -Wall -ggdb -m32 -gstabs -nostdinc  -fno-stack-protector -Ilibs/ -Ikern/debug/ -Ikern/driver/ -Ikern/trap/ -Ikern/mm/ -c kern/driver/console.c -o obj/kern/driver/console.o
-```
-//生成intr.o
-```
-+ cc kern/driver/intr.c
-gcc -Ikern/driver/ -fno-builtin -Wall -ggdb -m32 -gstabs -nostdinc  -fno-stack-protector -Ilibs/ -Ikern/debug/ -Ikern/driver/ -Ikern/trap/ -Ikern/mm/ -c kern/driver/intr.c -o obj/kern/driver/intr.o
-```
-//生成picirq.o
-```
-+ cc kern/driver/picirq.c
-gcc -Ikern/driver/ -fno-builtin -Wall -ggdb -m32 -gstabs -nostdinc  -fno-stack-protector -Ilibs/ -Ikern/debug/ -Ikern/driver/ -Ikern/trap/ -Ikern/mm/ -c kern/driver/picirq.c -o obj/kern/driver/picirq.o
-```
-//生成trap.o
-```
-+ cc kern/trap/trap.c
-gcc -Ikern/trap/ -fno-builtin -Wall -ggdb -m32 -gstabs -nostdinc  -fno-stack-protector -Ilibs/ -Ikern/debug/ -Ikern/driver/ -Ikern/trap/ -Ikern/mm/ -c kern/trap/trap.c -o obj/kern/trap/trap.o
-```
-//生成trapentry.o
-```
-+ cc kern/trap/trapentry.S
-gcc -Ikern/trap/ -fno-builtin -Wall -ggdb -m32 -gstabs -nostdinc  -fno-stack-protector -Ilibs/ -Ikern/debug/ -Ikern/driver/ -Ikern/trap/ -Ikern/mm/ -c kern/trap/trapentry.S -o obj/kern/trap/trapentry.o
-```
-//生成vectors.o
-```
-+ cc kern/trap/vectors.S
-gcc -Ikern/trap/ -fno-builtin -Wall -ggdb -m32 -gstabs -nostdinc  -fno-stack-protector -Ilibs/ -Ikern/debug/ -Ikern/driver/ -Ikern/trap/ -Ikern/mm/ -c kern/trap/vectors.S -o obj/kern/trap/vectors.o
-```
-//生成pmm.o
+	gcc -Ikern/debug/ -fno-builtin -Wall -ggdb -m32 -gstabs -nostdinc  -fno-stack-protector -Ilibs/ -Ikern/debug/ -Ikern/driver/ -Ikern/trap/ -Ikern/mm/ -c kern/debug/kdebug.c -o obj/kern/debug/kdebug.o
+	```
+	//生成kmonitor.o
+	```
+	+ cc kern/debug/kmonitor.c
+	gcc -Ikern/debug/ -fno-builtin -Wall -ggdb -m32 -gstabs -nostdinc  -fno-stack-protector -Ilibs/ -Ikern/debug/ -Ikern/driver/ -Ikern/trap/ -Ikern/mm/ -c kern/debug/kmonitor.c -o obj/kern/debug/kmonitor.o
+	```
+	//生成panic.o
+	```
+	+ cc kern/debug/panic.c
+	gcc -Ikern/debug/ -fno-builtin -Wall -ggdb -m32 -gstabs -nostdinc  -fno-stack-protector -Ilibs/ -Ikern/debug/ -Ikern/driver/ -Ikern/trap/ -Ikern/mm/ -c kern/debug/panic.c -o obj/kern/debug/panic.o
+	```
+	//生成clock.o
+	```
+	+ cc kern/driver/clock.c
+	gcc -Ikern/driver/ -fno-builtin -Wall -ggdb -m32 -gstabs -nostdinc  -fno-stack-protector -Ilibs/ -Ikern/debug/ -Ikern/driver/ -Ikern/trap/ -Ikern/mm/ -c kern/driver/clock.c -o obj/kern/driver/clock.o
+	```
+	//生成console.o
+	```
+	+ cc kern/driver/console.c
+	gcc -Ikern/driver/ -fno-builtin -Wall -ggdb -m32 -gstabs -nostdinc  -fno-stack-protector -Ilibs/ -Ikern/debug/ -Ikern/driver/ -Ikern/trap/ -Ikern/mm/ -c kern/driver/console.c -o obj/kern/driver/console.o
+	```
+	//生成intr.o
+	```
+	+ cc kern/driver/intr.c
+	gcc -Ikern/driver/ -fno-builtin -Wall -ggdb -m32 -gstabs -nostdinc  -fno-stack-protector -Ilibs/ -Ikern/debug/ -Ikern/driver/ -Ikern/trap/ -Ikern/mm/ -c kern/driver/intr.c -o obj/kern/driver/intr.o
+	```
+	//生成picirq.o
+	```
+	+ cc kern/driver/picirq.c
+	gcc -Ikern/driver/ -fno-builtin -Wall -ggdb -m32 -gstabs -nostdinc  -fno-stack-protector -Ilibs/ -Ikern/debug/ -Ikern/driver/ -Ikern/trap/ -Ikern/mm/ -c kern/driver/picirq.c -o obj/kern/driver/picirq.o
+	```
+	//生成trap.o
+	```
+	+ cc kern/trap/trap.c
+	gcc -Ikern/trap/ -fno-builtin -Wall -ggdb -m32 -gstabs -nostdinc  -fno-stack-protector -Ilibs/ -Ikern/debug/ -Ikern/driver/ -Ikern/trap/ -Ikern/mm/ -c kern/trap/trap.c -o obj/kern/trap/trap.o
+	```
+	//生成trapentry.o
+	```
+	+ cc kern/trap/trapentry.S
+	gcc -Ikern/trap/ -fno-builtin -Wall -ggdb -m32 -gstabs -nostdinc  -fno-stack-protector -Ilibs/ -Ikern/debug/ -Ikern/driver/ -Ikern/trap/ -Ikern/mm/ -c kern/trap/trapentry.S -o obj/kern/trap/trapentry.o
+	```
+	//生成vectors.o
+	```
+	+ cc kern/trap/vectors.S
+	gcc -Ikern/trap/ -fno-builtin -Wall -ggdb -m32 -gstabs -nostdinc  -fno-stack-protector -Ilibs/ -Ikern/debug/ -Ikern/driver/ -Ikern/trap/ -Ikern/mm/ -c kern/trap/vectors.S -o obj/kern/trap/vectors.o
+	```
+	//生成pmm.o
+	```
 + cc kern/mm/pmm.c
 gcc -Ikern/mm/ -fno-builtin -Wall -ggdb -m32 -gstabs -nostdinc  -fno-stack-protector -Ilibs/ -Ikern/debug/ -Ikern/driver/ -Ikern/trap/ -Ikern/mm/ -c kern/mm/pmm.c -o obj/kern/mm/pmm.o
+```
 //生成printfmt.o
+```
 + cc libs/printfmt.c
 gcc -Ilibs/ -fno-builtin -Wall -ggdb -m32 -gstabs -nostdinc  -fno-stack-protector -Ilibs/  -c libs/printfmt.c -o obj/libs/printfmt.o
+```
 //生成string.o
+```
 + cc libs/string.c
 gcc -Ilibs/ -fno-builtin -Wall -ggdb -m32 -gstabs -nostdinc  -fno-stack-protector -Ilibs/  -c libs/string.c -o obj/libs/string.o
+```
 //生成kernel，将之前生成的 .o文件链接到一起。
+```
 + ld bin/kernel
 ld -m    elf_i386 -nostdlib -T tools/kernel.ld -o bin/kernel  obj/kern/init/init.o obj/kern/libs/readline.o obj/kern/libs/stdio.o obj/kern/debug/kdebug.o obj/kern/debug/kmonitor.o obj/kern/debug/panic.o obj/kern/driver/clock.o obj/kern/driver/console.o obj/kern/driver/intr.o obj/kern/driver/picirq.o obj/kern/trap/trap.o obj/kern/trap/trapentry.o obj/kern/trap/vectors.o obj/kern/mm/pmm.o  obj/libs/printfmt.o obj/libs/string.o
+```
+
+参数：
 	-m  将创建输出文件所要处理的所有文件的名称和归档成员列到标准输出。不列出共享对象和导入文件。
 	elf_i386  规定文件的格式
 	-nostdlib  仅搜索那些在命令行上显式指定的库路径. 在连接脚本中(包含在命令行上指定的连接脚本)指定的库路径都被忽略
@@ -110,32 +120,46 @@ ld -m    elf_i386 -nostdlib -T tools/kernel.ld -o bin/kernel  obj/kern/init/init
 	-o bin/kernel  使用OUTPUT作为'ld'产生的程序的名字;如果这个选项没有指定,缺省的输出文件名是'a.out'.脚本命令'OUTPUT'也可以被用来指定输出文件的文件名.
 
 //生成bootasm.o
+```
 + cc boot/bootasm.S
 gcc -Iboot/ -fno-builtin -Wall -ggdb -m32 -gstabs -nostdinc  -fno-stack-protector -Ilibs/ -Os -nostdinc -c boot/bootasm.S -o obj/boot/bootasm.o
+```
 	-Os  为减小代码大小而进行优化。
 //生成bootmain.o
+```
 + cc boot/bootmain.c
 gcc -Iboot/ -fno-builtin -Wall -ggdb -m32 -gstabs -nostdinc  -fno-stack-protector -Ilibs/ -Os -nostdinc -c boot/bootmain.c -o obj/boot/bootmain.o
+```
 //生成sign.o和sign
+```
 + cc tools/sign.c
 gcc -Itools/ -g -Wall -O2 -c tools/sign.c -o obj/sign/tools/sign.o
 gcc -g -Wall -O2 obj/sign/tools/sign.o -o bin/sign
+```
 	-O2  优化
 //将bootasm.o和bootmain.o链接到一起，生成bootblock.o
+```
 + ld bin/bootblock
 ld -m    elf_i386 -nostdlib -N -e start -Ttext 0x7C00 obj/boot/bootasm.o obj/boot/bootmain.o -o obj/bootblock.o
+```
 	-N 把text和data节设置为可读写.同时,取消数据节的页对齐,同时,取消对共享库的连接.如果输出格式 
 	-e 使用符号start作为你的程序的开始执行点,而不是使用缺省的进入点
 	-Ttext  制定代码段开始位置
 //生成一个有10000个块的文件，每个块默认512字节，用0填充
+```
 dd if=/dev/zero of=bin/ucore.img count=10000
+```
 //把bootblock中的内容写到第一个块
+```
 dd if=bin/bootblock of=bin/ucore.img conv=notrunc
+```
 //从第二个块开始写kernel中的内容
+```
 dd if=bin/kernel of=bin/ucore.img seek=1 conv=notrunc
+```
 
 
-2.	一个被系统认为是符合规范的硬盘主引导扇区的特征是什么？
+2. 一个被系统认为是符合规范的硬盘主引导扇区的特征是什么？
 	```C
 	char buf[512];
     memset(buf, 0, sizeof(buf));
