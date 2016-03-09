@@ -18,20 +18,19 @@
 	```
 	+ cc kern/init/init.c
 	gcc -Ikern/init/ -fno-builtin -Wall -ggdb -m32 -gstabs -nostdinc  -fno-stack-protector -Ilibs/ -Ikern/debug/ -Ikern/driver/ -Ikern/trap/ -Ikern/mm/ -c kern/init/init.c -o obj/kern/init/init.o
-	```
-	
+	```  
 	参数：
-	* -I<dir>  将dir作为-l链接的搜索路径加入到-l的搜索路径列表中。它的搜索顺序位于标准库之前。
+	* -I<dir>	将dir作为-l链接的搜索路径加入到-l的搜索路径列表中。它的搜索顺序位于标准库之前。
 	* -fno-builtin  允许加入的新函数与原先库函数冲突
-	* -Wall   显示警告信息
-	* -ggdb  尽可能的生成gdb的可以使用的调试信息
-	* -m32  生成适用于32位环境的代码
-	* -gstabs  此选项以stabs格式声称调试信息,但是不包括gdb调试信息
-	* -nostdinc  不使用标准库
+	* -Wall   	显示警告信息
+	* -ggdb  	尽可能的生成gdb的可以使用的调试信息
+	* -m32  	生成适用于32位环境的代码
+	* -gstab	此选项以stabs格式声称调试信息,但是不包括gdb调试信息
+	* -nostdinc  	不使用标准库
 	* -fno-stack-protector  不生成用于检测缓冲区溢出的代码
-	* -c  只激活预处理,编译,和汇编,也就是只把程序做成obj文件
-	* -o  制定目标名称
-//生成readline.o
+	* -c  		只激活预处理,编译,和汇编,也就是只把程序做成obj文件
+	* -o  		制定目标名称
+	//生成readline.o
 + cc kern/libs/readline.c
 gcc -Ikern/libs/ -fno-builtin -Wall -ggdb -m32 -gstabs -nostdinc  -fno-stack-protector -Ilibs/ -Ikern/debug/ -Ikern/driver/ -Ikern/trap/ -Ikern/mm/ -c kern/libs/readline.c -o obj/kern/libs/readline.o
 //生成stdio.o
