@@ -1,8 +1,8 @@
 ##练习4：分析bootloader加载ELF格式的OS的过程
 通过阅读bootmain.c，了解bootloader如何加载ELF文件。通过分析源代码和通过qemu来运行并调试bootloader&OS.  
-* bootloader如何读取硬盘扇区的？
+* bootloader如何读取硬盘扇区的？  
   见代码中文注释  
-* bootloader是如何加载ELF格式的OS？
+* bootloader是如何加载ELF格式的OS？  
   见代码中文注释  
   ```C
   #include <defs.h>
