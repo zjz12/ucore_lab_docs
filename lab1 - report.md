@@ -158,25 +158,24 @@ dd if=bin/bootblock of=bin/ucore.img conv=notrunc
 dd if=bin/kernel of=bin/ucore.img seek=1 conv=notrunc
 ```
 
-
-2. 一个被系统认为是符合规范的硬盘主引导扇区的特征是什么？
+2. 一个被系统认为是符合规范的硬盘主引导扇区的特征是什么？  
 	```C
 	char buf[512];
-    memset(buf, 0, sizeof(buf));
-    FILE *ifp = fopen(argv[1], "rb");
-    int size = fread(buf, 1, st.st_size, ifp);
-    if (size != st.st_size) {
-        fprintf(stderr, "read '%s' error, size is %d.\n", argv[1], size);
-        return -1;
-    }
-    fclose(ifp);
-    buf[510] = 0x55;
-    buf[511] = 0xAA;
-    FILE *ofp = fopen(argv[2], "wb+");
-    size = fwrite(buf, 1, 512, ofp);
-    if (size != 512) {
-        fprintf(stderr, "write '%s' error, size is %d.\n", argv[2], size);
-        return -1;
+	memset(buf, 0, sizeof(buf));
+	FILE *ifp = fopen(argv[1], "rb");
+	int size = fread(buf, 1, st.st_size, ifp);
+	if (size != st.st_size) {
+		fprintf(stderr, "read '%s' error, size is %d.\n", argv[1], size);
+        	return -1;
+        }
+        fclose(ifp);
+    	buf[510] = 0x55;
+    	buf[511] = 0xAA;
+    	FILE *ofp = fopen(argv[2], "wb+");
+    	size = fwrite(buf, 1, 512, ofp);
+    	if (size != 512) {
+        	fprintf(stderr, "write '%s' error, size is %d.\n", argv[2], size);
+        	return -1;
 	}
 	```
 由上述sign.c中的代码可知，硬盘主引导扇区大小为512 byte，且最后两位分别为0x55和 0xAA .
