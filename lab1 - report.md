@@ -116,47 +116,47 @@
 	* -m  将创建输出文件所要处理的所有文件的名称和归档成员列到标准输出。不列出共享对象和导入文件。
 	* elf_i386  规定文件的格式
 	* -nostdlib  仅搜索那些在命令行上显式指定的库路径. 在连接脚本中(包含在命令行上指定的连接脚本)指定的库路径都被忽略
-	-T tools/kernel.ld  把tools/kernel.ld作为连接脚本使用. 这个脚本会替代'ld'的缺省连接脚本(而不是增加它的内容),所以命令文件必须指定所有需要的东西以精确描述输出文件. 如果SCRIPTFILE在当前目录下不存在,'ld'会在'-L'选项指定的所有目录下去寻找.多个'-T'选项会使内容累积.
-	-o bin/kernel  使用OUTPUT作为'ld'产生的程序的名字;如果这个选项没有指定,缺省的输出文件名是'a.out'.脚本命令'OUTPUT'也可以被用来指定输出文件的文件名.
+	* -T tools/kernel.ld  把tools/kernel.ld作为连接脚本使用.这个脚本会替代'ld'的缺省连接脚本(而不是增加它的内容),所以命令文件必须指定所有需要的东西以精确描述输出文件.如果SCRIPTFILE在当前目录下不存在,'ld'会在'-L'选项指定的所有目录下去寻找.多个'-T'选项会使内容累积.
+	* -o bin/kernel  使用OUTPUT作为'ld'产生的程序的名字;如果这个选项没有指定,缺省的输出文件名是'a.out'.脚本命令'OUTPUT'也可以被用来指定输出文件的文件名.
 
-//生成bootasm.o
-```
-+ cc boot/bootasm.S
-gcc -Iboot/ -fno-builtin -Wall -ggdb -m32 -gstabs -nostdinc  -fno-stack-protector -Ilibs/ -Os -nostdinc -c boot/bootasm.S -o obj/boot/bootasm.o
-```
-	-Os  为减小代码大小而进行优化。
-//生成bootmain.o
-```
-+ cc boot/bootmain.c
-gcc -Iboot/ -fno-builtin -Wall -ggdb -m32 -gstabs -nostdinc  -fno-stack-protector -Ilibs/ -Os -nostdinc -c boot/bootmain.c -o obj/boot/bootmain.o
-```
-//生成sign.o和sign
-```
-+ cc tools/sign.c
-gcc -Itools/ -g -Wall -O2 -c tools/sign.c -o obj/sign/tools/sign.o
-gcc -g -Wall -O2 obj/sign/tools/sign.o -o bin/sign
-```
-	-O2  优化
-//将bootasm.o和bootmain.o链接到一起，生成bootblock.o
-```
-+ ld bin/bootblock
-ld -m    elf_i386 -nostdlib -N -e start -Ttext 0x7C00 obj/boot/bootasm.o obj/boot/bootmain.o -o obj/bootblock.o
-```
-	-N 把text和data节设置为可读写.同时,取消数据节的页对齐,同时,取消对共享库的连接.如果输出格式 
-	-e 使用符号start作为你的程序的开始执行点,而不是使用缺省的进入点
-	-Ttext  制定代码段开始位置
-//生成一个有10000个块的文件，每个块默认512字节，用0填充
-```
-dd if=/dev/zero of=bin/ucore.img count=10000
-```
-//把bootblock中的内容写到第一个块
-```
-dd if=bin/bootblock of=bin/ucore.img conv=notrunc
-```
-//从第二个块开始写kernel中的内容
-```
-dd if=bin/kernel of=bin/ucore.img seek=1 conv=notrunc
-```
+	//生成bootasm.o
+	```
+	+ cc boot/bootasm.S
+	gcc -Iboot/ -fno-builtin -Wall -ggdb -m32 -gstabs -nostdinc  -fno-stack-protector -Ilibs/ -Os -nostdinc -c boot/bootasm.S -o obj/boot/bootasm.o
+	```
+	* -Os  为减小代码大小而进行优化。
+	//生成bootmain.o
+	```
+	+ cc boot/bootmain.c
+	gcc -Iboot/ -fno-builtin -Wall -ggdb -m32 -gstabs -nostdinc  -fno-stack-protector -Ilibs/ -Os -nostdinc -c boot/bootmain.c -o obj/boot/bootmain.o
+	```
+	//生成sign.o和sign
+	```
+	+ cc tools/sign.c
+	gcc -Itools/ -g -Wall -O2 -c tools/sign.c -o obj/sign/tools/sign.o
+	gcc -g -Wall -O2 obj/sign/tools/sign.o -o bin/sign
+	```
+	* -O2  优化
+	//将bootasm.o和bootmain.o链接到一起，生成bootblock.o
+	```
+	+ ld bin/bootblock
+	ld -m    elf_i386 -nostdlib -N -e start -Ttext 0x7C00 obj/boot/bootasm.o obj/boot/bootmain.o -o obj/bootblock.o
+	```
+	* -N 把text和data节设置为可读写.同时,取消数据节的页对齐,同时,取消对共享库的连接.如果输出格式 
+	* -e 使用符号start作为你的程序的开始执行点,而不是使用缺省的进入点
+	* -Ttext  制定代码段开始位置
+	//生成一个有10000个块的文件，每个块默认512字节，用0填充
+	```
+	dd if=/dev/zero of=bin/ucore.img count=10000
+	```
+	//把bootblock中的内容写到第一个块
+	```
+	dd if=bin/bootblock of=bin/ucore.img conv=notrunc
+	```
+	//从第二个块开始写kernel中的内容
+	```
+	dd if=bin/kernel of=bin/ucore.img seek=1 conv=notrunc
+	```
 
 2. 一个被系统认为是符合规范的硬盘主引导扇区的特征是什么？  
 
@@ -180,12 +180,11 @@ dd if=bin/kernel of=bin/ucore.img seek=1 conv=notrunc
 	}
 	```
 	
-由上述sign.c中的代码可知，硬盘主引导扇区大小为512 byte，且最后两位分别为0x55和 0xAA .
+	由上述sign.c中的代码可知，硬盘主引导扇区大小为512 byte，且最后两位分别为0x55和 0xAA .
 
-练习2：使用qemu执行并调试lab1中的软件
+##练习2：使用qemu执行并调试lab1中的软件
 为了熟悉使用qemu和gdb进行的调试工作，我们进行如下的小练习：
-1.	从CPU加电后执行的第一条指令开始，单步跟踪BIOS的执行。
-
-2.	在初始化位置0x7c00设置实地址断点,测试断点正常。
-3.	从0x7c00开始跟踪代码运行,将单步跟踪反汇编得到的代码与bootasm.S和 bootblock.asm进行比较。
-4.	自己找一个bootloader或内核中的代码位置，设置断点并进行测试。
+1. 从CPU加电后执行的第一条指令开始，单步跟踪BIOS的执行。
+2. 在初始化位置0x7c00设置实地址断点,测试断点正常。
+3. 从0x7c00开始跟踪代码运行,将单步跟踪反汇编得到的代码与bootasm.S和 bootblock.asm进行比较。
+4. 自己找一个bootloader或内核中的代码位置，设置断点并进行测试。
