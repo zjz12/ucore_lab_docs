@@ -23,18 +23,22 @@ waitdisk(void) {
 static void
 readsect(void *dst, uint32_t secno) {
     // wait for disk to be ready
+    //等待硬盘准备好
     waitdisk();
-
-    outb(0x1F2, 1);                         // count = 1
-    outb(0x1F3, secno & 0xFF);
+    
+    //准备好后开始发出读取命令
+    outb(0x1F2, 1);                         // count = 1，表明读取的扇区数量为1个
+    outb(0x1F3, secno & 0xFF);              //设置扇区号
     outb(0x1F4, (secno >> 8) & 0xFF);
     outb(0x1F5, (secno >> 16) & 0xFF);
     outb(0x1F6, ((secno >> 24) & 0xF) | 0xE0);
+    //读取扇区
     outb(0x1F7, 0x20);                      // cmd 0x20 - read sectors
 
     // wait for disk to be ready
     waitdisk();
 
+    //读取到dst，单位为双字
     // read a sector
     insl(0x1F0, dst, SECTSIZE / 4);
 }
@@ -46,13 +50,13 @@ readsect(void *dst, uint32_t secno) {
 static void
 readseg(uintptr_t va, uint32_t count, uint32_t offset) {
     uintptr_t end_va = va + count;
-
+    
     // round down to sector boundary
     va -= offset % SECTSIZE;
-
+    //定位到ELF数据的位置
     // translate from bytes to sectors; kernel starts at sector 1
     uint32_t secno = (offset / SECTSIZE) + 1;
-
+    //批量读入任意长度的数据
     // If this is too slow, we could read lots of sectors at a time.
     // We'd write more to memory than asked, but it doesn't matter --
     // we load in increasing order.
