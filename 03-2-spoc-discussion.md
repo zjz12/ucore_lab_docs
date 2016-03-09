@@ -38,6 +38,6 @@ Virtual Address 6c74:
       
 Virtual Address 6b22:
   --> pde index:0xd2  pde contents:(valid 1, pfn 0x52)
-    --> pte index:0x7f  pte contents:(valid 0, pfn 0x7f)
-      --> Fault (page table entry not valid)
+    --> pte index:0xc7  pte contents:(valid 1, pfn 0x47)
+      --> Translates to Physical Address 0x8e2 --> Value: 1a
 ```
