@@ -21,8 +21,112 @@ ebp:0x00007bf8 eip:0x00007d73 args:0xc031fcfa 0xc08ed88e 0x64e4d08e 0xfa7502a8
 <unknow>: -- 0x00007d72 –
 ……
 ```
-请完成实验，看看输出是否与上述显示大致一致，并解释最后一行各个数值的含义。
+请完成实验，看看输出是否与上述显示大致一致，并解释最后一行各个数值的含义。  
+实验代码如下：  
+    ```
+void
+print_stackframe(void) {
+     /* LAB1 YOUR CODE : STEP 1 */
+     /* (1) call read_ebp() to get the value of ebp. the type is (uint32_t);
+      * (2) call read_eip() to get the value of eip. the type is (uint32_t);
+      * (3) from 0 .. STACKFRAME_DEPTH
+      *    (3.1) printf value of ebp, eip
+      *    (3.2) (uint32_t)calling arguments [0..4] = the contents in address (unit32_t)ebp +2 [0..4]
+      *    (3.3) cprintf("\n");
+      *    (3.4) call print_debuginfo(eip-1) to print the C calling function name and line number, etc.
+      *    (3.5) popup a calling stackframe
+      *           NOTICE: the calling funciton's return addr eip  = ss:[ebp+4]
+      *                   the calling funciton's ebp = ss:[ebp]
+      */
+    uint32_t ebp, eip;
+    uint32_t *args;
+    
+    ebp = read_ebp();
+    eip = read_eip();
+    int i, j;
+    for (i = 0; ebp != 0 && i < STACKFRAME_DEPTH;i++) {
+        cprintf("ebp:0x%08x eip:0x%08x args:", ebp, eip);
+        args = (uint32_t *)ebp + 2;
+        for (j = 0; j < 4; j++) {
+            cprintf("0x%08x ", args[j]);
+        }
+        cprintf("\n");
+        print_debuginfo(eip - 1);
+        eip = ((uint32_t *)ebp)[1];
+        ebp = ((uint32_t *)ebp)[0];
+    }
+}
+    ```
+执行make qemu后得到以下输出：  
+    ```
+moocos-> make qemu
++ cc kern/init/init.c
+kern/init/init.c:95:1: warning: ‘lab1_switch_test’ defined but not used [-Wunused-function]
+ lab1_switch_test(void) {
+ ^
++ cc kern/libs/readline.c
++ cc kern/libs/stdio.c
++ cc kern/debug/kdebug.c
++ cc kern/debug/kmonitor.c
++ cc kern/debug/panic.c
++ cc kern/driver/clock.c
++ cc kern/driver/console.c
++ cc kern/driver/intr.c
++ cc kern/driver/picirq.c
++ cc kern/trap/trap.c
+kern/trap/trap.c:14:13: warning: ‘print_ticks’ defined but not used [-Wunused-function]
+ static void print_ticks() {
+             ^
+kern/trap/trap.c:30:26: warning: ‘idt_pd’ defined but not used [-Wunused-variable]
+ static struct pseudodesc idt_pd = {
+                          ^
++ cc kern/trap/trapentry.S
++ cc kern/trap/vectors.S
++ cc kern/mm/pmm.c
++ cc libs/printfmt.c
++ cc libs/string.c
++ ld bin/kernel
++ cc boot/bootasm.S
++ cc boot/bootmain.c
++ cc tools/sign.c
++ ld bin/bootblock
+'obj/bootblock.out' size: 472 bytes
+build 512 bytes boot sector: 'bin/bootblock' success!
+10000+0 records in
+10000+0 records out
+5120000 bytes (5.1 MB) copied, 0.0505333 s, 101 MB/s
+1+0 records in
+1+0 records out
+512 bytes (512 B) copied, 0.000292722 s, 1.7 MB/s
+146+1 records in
+146+1 records out
+74871 bytes (75 kB) copied, 0.00165952 s, 45.1 MB/s
+(THU.CST) os is loading ...
 
+Special kernel symbols:
+  entry  0x00100000 (phys)
+  etext  0x001032c3 (phys)
+  edata  0x0010ea16 (phys)
+  end    0x0010fd20 (phys)
+Kernel executable memory footprint: 64KB
+ebp:0x00007b08 eip:0x001009a6 args:0x00010094 0x00000000 0x00007b38 0x00100092 
+    kern/debug/kdebug.c:309: print_stackframe+21
+ebp:0x00007b18 eip:0x00100c95 args:0x00000000 0x00000000 0x00000000 0x00007b88 
+    kern/debug/kmonitor.c:125: mon_backtrace+10
+ebp:0x00007b38 eip:0x00100092 args:0x00000000 0x00007b60 0xffff0000 0x00007b64 
+    kern/init/init.c:48: grade_backtrace2+33
+ebp:0x00007b58 eip:0x001000bb args:0x00000000 0xffff0000 0x00007b84 0x00000029 
+    kern/init/init.c:53: grade_backtrace1+38
+ebp:0x00007b78 eip:0x001000d9 args:0x00000000 0x00100000 0xffff0000 0x0000001d 
+    kern/init/init.c:58: grade_backtrace0+23
+ebp:0x00007b98 eip:0x001000fe args:0x001032fc 0x001032e0 0x0000130a 0x00000000 
+    kern/init/init.c:63: grade_backtrace+34
+ebp:0x00007bc8 eip:0x00100055 args:0x00000000 0x00000000 0x00000000 0x00010094 
+    kern/init/init.c:28: kern_init+84
+ebp:0x00007bf8 eip:0x00007d68 args:0xc031fcfa 0xc08ed88e 0x64e4d08e 0xfa7502a8 
+    <unknow>: -- 0x00007d67 --
+++ setup timer interrupts
+    ```
 提示：可阅读小节“函数堆栈”，了解编译器如何建立函数调用关系的。在完成lab1编译后，查看lab1/obj/bootblock.asm，了解bootloader源码与机器码的语句和地址等的对应关系；查看lab1/obj/kernel.asm，了解 ucore OS源码与机器码的语句和地址等的对应关系。
 
 要求完成函数kern/debug/kdebug.c::print_stackframe的实现，提交改进后源代码包（可以编译执行），并在实验报告中简要说明实现过程，并写出对上述问题的回答。
