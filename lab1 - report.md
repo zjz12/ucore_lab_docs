@@ -93,29 +93,29 @@
 	```
 	//生成pmm.o
 	```
-+ cc kern/mm/pmm.c
-gcc -Ikern/mm/ -fno-builtin -Wall -ggdb -m32 -gstabs -nostdinc  -fno-stack-protector -Ilibs/ -Ikern/debug/ -Ikern/driver/ -Ikern/trap/ -Ikern/mm/ -c kern/mm/pmm.c -o obj/kern/mm/pmm.o
-```
-//生成printfmt.o
-```
-+ cc libs/printfmt.c
-gcc -Ilibs/ -fno-builtin -Wall -ggdb -m32 -gstabs -nostdinc  -fno-stack-protector -Ilibs/  -c libs/printfmt.c -o obj/libs/printfmt.o
-```
-//生成string.o
-```
-+ cc libs/string.c
-gcc -Ilibs/ -fno-builtin -Wall -ggdb -m32 -gstabs -nostdinc  -fno-stack-protector -Ilibs/  -c libs/string.c -o obj/libs/string.o
-```
-//生成kernel，将之前生成的 .o文件链接到一起。
-```
-+ ld bin/kernel
-ld -m    elf_i386 -nostdlib -T tools/kernel.ld -o bin/kernel  obj/kern/init/init.o obj/kern/libs/readline.o obj/kern/libs/stdio.o obj/kern/debug/kdebug.o obj/kern/debug/kmonitor.o obj/kern/debug/panic.o obj/kern/driver/clock.o obj/kern/driver/console.o obj/kern/driver/intr.o obj/kern/driver/picirq.o obj/kern/trap/trap.o obj/kern/trap/trapentry.o obj/kern/trap/vectors.o obj/kern/mm/pmm.o  obj/libs/printfmt.o obj/libs/string.o
-```
+	+ cc kern/mm/pmm.c
+	gcc -Ikern/mm/ -fno-builtin -Wall -ggdb -m32 -gstabs -nostdinc  -fno-stack-protector -Ilibs/ -Ikern/debug/ -Ikern/driver/ -Ikern/trap/ -Ikern/mm/ -c kern/mm/pmm.c -o obj/kern/mm/pmm.o
+	```
+	//生成printfmt.o
+	```
+	+ cc libs/printfmt.c
+	gcc -Ilibs/ -fno-builtin -Wall -ggdb -m32 -gstabs -nostdinc  -fno-stack-protector -Ilibs/  -c libs/printfmt.c -o obj/libs/printfmt.o
+	```
+	//生成string.o
+	```
+	+ cc libs/string.c
+	gcc -Ilibs/ -fno-builtin -Wall -ggdb -m32 -gstabs -nostdinc  -fno-stack-protector -Ilibs/  -c libs/string.c -o obj/libs/string.o
+	```
+	//生成kernel，将之前生成的 .o文件链接到一起。
+	```
+	+ ld bin/kernel
+	ld -m    elf_i386 -nostdlib -T tools/kernel.ld -o bin/kernel  obj/kern/init/init.o obj/kern/libs/readline.o obj/kern/libs/stdio.o obj/kern/debug/kdebug.o obj/kern/debug/kmonitor.o obj/kern/debug/panic.o obj/kern/driver/clock.o obj/kern/driver/console.o obj/kern/driver/intr.o obj/kern/driver/picirq.o obj/kern/trap/trap.o obj/kern/trap/trapentry.o obj/kern/trap/vectors.o obj/kern/mm/pmm.o  obj/libs/printfmt.o obj/libs/string.o
+	```
 
-参数：
-	-m  将创建输出文件所要处理的所有文件的名称和归档成员列到标准输出。不列出共享对象和导入文件。
-	elf_i386  规定文件的格式
-	-nostdlib  仅搜索那些在命令行上显式指定的库路径. 在连接脚本中(包含在命令行上指定的连接脚本)指定的库路径都被忽略
+	参数：  
+	* -m  将创建输出文件所要处理的所有文件的名称和归档成员列到标准输出。不列出共享对象和导入文件。
+	* elf_i386  规定文件的格式
+	* -nostdlib  仅搜索那些在命令行上显式指定的库路径. 在连接脚本中(包含在命令行上指定的连接脚本)指定的库路径都被忽略
 	-T tools/kernel.ld  把tools/kernel.ld作为连接脚本使用. 这个脚本会替代'ld'的缺省连接脚本(而不是增加它的内容),所以命令文件必须指定所有需要的东西以精确描述输出文件. 如果SCRIPTFILE在当前目录下不存在,'ld'会在'-L'选项指定的所有目录下去寻找.多个'-T'选项会使内容累积.
 	-o bin/kernel  使用OUTPUT作为'ld'产生的程序的名字;如果这个选项没有指定,缺省的输出文件名是'a.out'.脚本命令'OUTPUT'也可以被用来指定输出文件的文件名.
 
