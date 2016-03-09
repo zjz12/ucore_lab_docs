@@ -43,7 +43,18 @@
 	```
 	
 3. 从0x7c00开始跟踪代码运行,将单步跟踪反汇编得到的代码与bootasm.S和 bootblock.asm进行比较。  
-	a.   
+	a. 修改lab1/tools/gdbinit，内容为  
+	```
+file bin/kernel
+set architecture i8086
+target remote :1234
+break kern_init
+continue
+b *0x7c00
+c
+x /10i $pc
+	```
+	b. 将mMakefile
 	```
 IN: 
 0x00007c00:  cli    
