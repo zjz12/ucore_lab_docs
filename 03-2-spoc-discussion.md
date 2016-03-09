@@ -32,11 +32,12 @@ PT6..0:页表的物理基址>>5
 我们组选取了第一组虚拟地址，得到结果如下：
 ```
 Virtual Address 6c74:
-  --> pde index:0x1d  pde contents:(valid 1, pfn 0x33)
-    --> pte index:0xb  pte contents:(valid 0, pfn 0x7f)
+  --> pde index:0xa0  pde contents:(valid 1, pfn 0x20)
+    --> pte index:0x07  pte contents:(valid 0, pfn 0x07)
       --> Fault (page table entry not valid)
       
 Virtual Address 6b22:
-  --> pde index:0x8  pde contents:(valid 0, pfn 0x7f)
-      --> Fault (page directory entry not valid)
+  --> pde index:0xd2  pde contents:(valid 1, pfn 0x52)
+    --> pte index:0x7f  pte contents:(valid 0, pfn 0x7f)
+      --> Fault (page table entry not valid)
 ```
