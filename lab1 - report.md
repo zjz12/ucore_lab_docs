@@ -159,6 +159,7 @@ dd if=bin/kernel of=bin/ucore.img seek=1 conv=notrunc
 ```
 
 2. 一个被系统认为是符合规范的硬盘主引导扇区的特征是什么？  
+
 	```C
 	char buf[512];
 	memset(buf, 0, sizeof(buf));
@@ -178,6 +179,7 @@ dd if=bin/kernel of=bin/ucore.img seek=1 conv=notrunc
         	return -1;
 	}
 	```
+	
 由上述sign.c中的代码可知，硬盘主引导扇区大小为512 byte，且最后两位分别为0x55和 0xAA .
 
 练习2：使用qemu执行并调试lab1中的软件
