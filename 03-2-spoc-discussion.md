@@ -29,24 +29,14 @@ PT6..0:页表的物理基址>>5
    Virtual Address 748b
 ```
 
-比如答案可以如下表示： (注意：下面的结果是错的，你需要关注的是如何表示)
+我们组选取了第一组虚拟地址，得到结果如下：
 ```
-Virtual Address 7570:
+Virtual Address 6c74:
   --> pde index:0x1d  pde contents:(valid 1, pfn 0x33)
     --> pte index:0xb  pte contents:(valid 0, pfn 0x7f)
       --> Fault (page table entry not valid)
       
-Virtual Address 21e1:
+Virtual Address 6b22:
   --> pde index:0x8  pde contents:(valid 0, pfn 0x7f)
       --> Fault (page directory entry not valid)
-
-Virtual Address 7268:
-  --> pde index:0x1c  pde contents:(valid 1, pfn 0x5e)
-    --> pte index:0x13  pte contents:(valid 1, pfn 0x65)
-      --> Translates to Physical Address 0xca8 --> Value: 16
 ```
-
-
-
-（3）请基于你对原理课二级页表的理解，并参考Lab2建页表的过程，设计一个应用程序（可基于python, ruby, C, C++，LISP等）可模拟实现(2)题中描述的抽象OS，可正确完成二级页表转换。
-
