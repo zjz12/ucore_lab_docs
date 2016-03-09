@@ -34,7 +34,7 @@ PT6..0:页表的物理基址>>5
 Virtual Address 6c74:
   --> pde index:0x1b  pde contents:(valid 1, pfn 0x20)
     --> pte index:0x3  pte contents:(valid 1, pfn 0x61)
-      --> Translates to Physical Address 0xc34 --> Value: 1a
+      --> Translates to Physical Address 0xc34 --> Value: 6
       
 Virtual Address 6b22:
   --> pde index:0xd1a  pde contents:(valid 1, pfn 0x52)
