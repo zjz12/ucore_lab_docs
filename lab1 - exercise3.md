@@ -1,21 +1,8 @@
 ##练习3：分析bootloader进入保护模式的过程
 
-BIOS将通过读取硬盘主引导扇区到内存，并转跳到对应内存中的位置执行bootloader。请分析bootloader是如何完成从实模式进入保护模式的。  
+BIOS将通过读取硬盘主引导扇区到内存，并转跳到对应内存中的位置执行bootloader。请分析bootloader是如何完成从实模式进入保护模式的。
+  a.从cs = 0 && ip = 0x7c00进入bootloader启动过程，先关闭中断使能，清理寄存器
   ```
-#include <asm.h>
-
-# Start the CPU: switch to 32-bit protected mode, jump into C.
-# The BIOS loads this code from the first sector of the hard disk into
-# memory at physical address 0x7c00 and starts executing in real mode
-# with %cs=0 %ip=7c00.
-
-.set PROT_MODE_CSEG,        0x8                     # kernel code segment selector
-.set PROT_MODE_DSEG,        0x10                    # kernel data segment selector
-.set CR0_PE_ON,             0x1                     # protected mode enable flag
-
-# start address should be 0:7c00, in real mode, the beginning address of the running bootloader
-.globl start
-start:
 .code16                                             # Assemble for 16-bit mode
     cli                                             # Disable interrupts
     cld                                             # String operations increment
@@ -25,7 +12,8 @@ start:
     movw %ax, %ds                                   # -> Data Segment
     movw %ax, %es                                   # -> Extra Segment
     movw %ax, %ss                                   # -> Stack Segment
-
+  ```
+  
     # Enable A20:
     #  For backwards compatibility with the earliest PCs, physical
     #  address line 20 is tied low, so that addresses higher than
