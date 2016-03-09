@@ -13,7 +13,7 @@ BIOS将通过读取硬盘主引导扇区到内存，并转跳到对应内存中�
     movw %ax, %es                                   # -> Extra Segment
     movw %ax, %ss                                   # -> Stack Segment
   ```
-  开启A20，以便能够通过总线访问更大的内存空间
+  b. 开启A20，以便能够通过总线访问更大的内存空间
   ```
     # Enable A20:
     #  For backwards compatibility with the earliest PCs, physical
