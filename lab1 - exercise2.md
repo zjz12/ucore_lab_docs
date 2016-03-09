@@ -54,7 +54,11 @@ b *0x7c00
 c
 x /10i $pc
 	```
-	b. 将mMakefile
+	b. 将Makefile中qemu修改如下：
+	```
+qemu: $(UCOREIMG)
+	$(V)$(QEMU) -no-reboot -d in_asm -D q.log -parallel stdio -hda $< -serial null
+	```
 	```
 IN: 
 0x00007c00:  cli    
