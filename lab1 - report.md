@@ -31,6 +31,7 @@
 	* -fno-stack-protector  不生成用于检测缓冲区溢出的代码
 	* -c  		只激活预处理,编译,和汇编,也就是只把程序做成obj文件
 	* -o  		制定目标名称
+
 	//生成readline.o
 	```
 	+ cc kern/libs/readline.c
@@ -125,6 +126,7 @@
 	gcc -Iboot/ -fno-builtin -Wall -ggdb -m32 -gstabs -nostdinc  -fno-stack-protector -Ilibs/ -Os -nostdinc -c boot/bootasm.S -o obj/boot/bootasm.o
 	```
 	* -Os  为减小代码大小而进行优化。
+
 	//生成bootmain.o
 	```
 	+ cc boot/bootmain.c
@@ -137,6 +139,7 @@
 	gcc -g -Wall -O2 obj/sign/tools/sign.o -o bin/sign
 	```
 	* -O2  优化
+
 	//将bootasm.o和bootmain.o链接到一起，生成bootblock.o
 	```
 	+ ld bin/bootblock
@@ -145,6 +148,7 @@
 	* -N 把text和data节设置为可读写.同时,取消数据节的页对齐,同时,取消对共享库的连接.如果输出格式 
 	* -e 使用符号start作为你的程序的开始执行点,而不是使用缺省的进入点
 	* -Ttext  制定代码段开始位置
+
 	//生成一个有10000个块的文件，每个块默认512字节，用0填充
 	```
 	dd if=/dev/zero of=bin/ucore.img count=10000
