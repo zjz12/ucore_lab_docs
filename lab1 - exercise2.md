@@ -6,8 +6,10 @@
 	a. 为了跟踪BIOS，需要修改lab1/tools/gdbinit, 内容为:  
 	
 	```
+	file bin/kernel
 	set architecture i8086
 	target remote :1234
+	break kern_init
 	```
 	
 	b. 随后执行debug，在gdb调试界面下执行``si``命令  
