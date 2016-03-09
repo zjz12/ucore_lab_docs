@@ -77,5 +77,11 @@ protcseg:
   ```
 提示：需要阅读小节“保护模式和分段机制”和lab1/boot/bootasm.S源码，了解如何从实模式切换到保护模式，需要了解：  
 * 为何开启A20，以及如何开启A20
+  - 为了兼容早期设备，20总线被置为0，使得此模式下能够访问的最大地址不超过1M，在ucore中最大地址为4G，故需要开启A20，以访问更大的内存空间。  
+  - 开启A20：  
+    等待8042 Input buffer为空；  
+    发送Write 8042 Output Port （P2）命令到8042 Input buffer；  
+    等待8042 Input buffer为空；  
+    将8042 Output Port（P2）得到字节的第2位置1，然后写入8042 Input buffer；  
 * 如何初始化GDT表
 * 如何使能和进入保护模式
