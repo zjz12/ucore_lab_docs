@@ -23,6 +23,17 @@ ebp:0x00007bf8 eip:0x00007d73 args:0xc031fcfa 0xc08ed88e 0x64e4d08e 0xfa7502a8
 ```
 
 请完成实验，看看输出是否与上述显示大致一致，并解释最后一行各个数值的含义。  
+
+
+ss:ebp指向的堆栈位置储存着caller的ebp，以此为线索可以得到所有使用堆栈的函数ebp。   ss:ebp+4指向caller调用时的eip，ss:ebp+8等是（可能的）参数。  
+
+输出中，堆栈最深一层为  
+
+    ebp:0x00007bf8 eip:0x00007d68 \
+        args:0x00000000 0x00000000 0x00000000 0x00007c4f
+        <unknow>: -- 0x00007d67 --
+其对应的是第一个使用堆栈的函数，bootmain.c中的bootmain。 bootloader设置的堆栈从0x7c00开始，使用"call bootmain"转入bootmain函数。 call指令压栈，所以bootmain中ebp为0x7bf8。  
+
 实验代码如下：  
 
 ```C
