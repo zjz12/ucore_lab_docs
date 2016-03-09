@@ -3,7 +3,6 @@
 ##实验报告要求
 为了实现lab1的目标，lab1提供了6个基本练习和1个扩展练习，要求完成实验报告。  
 对实验报告的要求：
-
 * 基于markdown格式来完成，以文本方式为主。
 * 填写各个基本练习中要求完成的报告内容
 * 完成实验后，请分析ucore_lab中提供的参考答案，并请在实验报告中说明你的实现与参考答案的区别
@@ -11,27 +10,27 @@
 * 列出你认为OS原理中很重要，但在实验中没有对应上的知识点
 
 ##练习1
-1. 操作系统镜像文件ucore.img是如何一步一步生成的？(需要比较详细地解释Makefile中每一条相关命令和命令参数的含义，以及说明命令导致的结果)  
+1. 操作系统镜像文件ucore.img是如何一步一步生成的？(需要比较详细地解释Makefile中每一条相关命令和命令参数的含义，以及说明命令导致的结果)
 	```
 	moocos-> make V=
 	```  
-	//生成init.o
+	//生成init.o  
 	```
 	+ cc kern/init/init.c
 	gcc -Ikern/init/ -fno-builtin -Wall -ggdb -m32 -gstabs -nostdinc  -fno-stack-protector -Ilibs/ -Ikern/debug/ -Ikern/driver/ -Ikern/trap/ -Ikern/mm/ -c kern/init/init.c -o obj/kern/init/init.o
 	```
-
-参数：
-	-I<dir>  将dir作为-l链接的搜索路径加入到-l的搜索路径列表中。它的搜索顺序位于标准库之前。
-	-fno-builtin  允许加入的新函数与原先库函数冲突
-	-Wall   显示警告信息
-	-ggdb  尽可能的生成gdb的可以使用的调试信息
-	-m32  生成适用于32位环境的代码
-	-gstabs  此选项以stabs格式声称调试信息,但是不包括gdb调试信息
-	-nostdinc  不使用标准库
-	-fno-stack-protector  不生成用于检测缓冲区溢出的代码
-	-c  只激活预处理,编译,和汇编,也就是只把程序做成obj文件
-	-o  制定目标名称
+	
+	参数：
+	* -I<dir>  将dir作为-l链接的搜索路径加入到-l的搜索路径列表中。它的搜索顺序位于标准库之前。
+	* -fno-builtin  允许加入的新函数与原先库函数冲突
+	* -Wall   显示警告信息
+	* -ggdb  尽可能的生成gdb的可以使用的调试信息
+	* -m32  生成适用于32位环境的代码
+	* -gstabs  此选项以stabs格式声称调试信息,但是不包括gdb调试信息
+	* -nostdinc  不使用标准库
+	* -fno-stack-protector  不生成用于检测缓冲区溢出的代码
+	* -c  只激活预处理,编译,和汇编,也就是只把程序做成obj文件
+	* -o  制定目标名称
 //生成readline.o
 + cc kern/libs/readline.c
 gcc -Ikern/libs/ -fno-builtin -Wall -ggdb -m32 -gstabs -nostdinc  -fno-stack-protector -Ilibs/ -Ikern/debug/ -Ikern/driver/ -Ikern/trap/ -Ikern/mm/ -c kern/libs/readline.c -o obj/kern/libs/readline.o
