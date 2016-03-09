@@ -23,8 +23,9 @@ ebp:0x00007bf8 eip:0x00007d73 args:0xc031fcfa 0xc08ed88e 0x64e4d08e 0xfa7502a8
 ```
 
 请完成实验，看看输出是否与上述显示大致一致，并解释最后一行各个数值的含义。  
-实验代码如下：
-    ```C
+实验代码如下：  
+
+```C
     void
     print_stackframe(void) {
         uint32_t ebp, eip;
@@ -45,12 +46,12 @@ ebp:0x00007bf8 eip:0x00007d73 args:0xc031fcfa 0xc08ed88e 0x64e4d08e 0xfa7502a8
         ebp = ((uint32_t *)ebp)[0];
         }
     }
-    ```
+```
     
 执行make qemu后得到以下输出：
 
 
-    ```
+```
 moocos-> make qemu
 + cc kern/init/init.c
 kern/init/init.c:95:1: warning: ‘lab1_switch_test’ defined but not used [-Wunused-function]
@@ -118,7 +119,7 @@ ebp:0x00007bc8 eip:0x00100055 args:0x00000000 0x00000000 0x00000000 0x00010094
 ebp:0x00007bf8 eip:0x00007d68 args:0xc031fcfa 0xc08ed88e 0x64e4d08e 0xfa7502a8 
     <unknow>: -- 0x00007d67 --
 ++ setup timer interrupts
-    ```
+```
     
 提示：可阅读小节“函数堆栈”，了解编译器如何建立函数调用关系的。在完成lab1编译后，查看lab1/obj/bootblock.asm，了解bootloader源码与机器码的语句和地址等的对应关系；查看lab1/obj/kernel.asm，了解 ucore OS源码与机器码的语句和地址等的对应关系。
 
