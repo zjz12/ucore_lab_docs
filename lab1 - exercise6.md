@@ -70,7 +70,8 @@
            * (2) Every TICK_NUM cycle, you can print some info using a funciton, such as print_ticks().
           * (3) Too Simple? Yes, I think so!
           */
-          ticks ++;
+          //ticks用来记录时钟中断次数，每100次调用一次print_ticks()即可
+          ticks++;
           if (ticks % TICK_NUM == 0) {
               print_ticks();
           }
