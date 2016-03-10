@@ -40,7 +40,8 @@
          */
         extern uintptr_t __vectors[];
         int i;
-        //将256个idt表项全部填充，参数：0表示为中断，GD_KTEXT表示kernel text，__vectors[i]表示对用的中断处理程序在代码段中的偏移，DPL_KERNEL表示为内核态
+        //将256个idt表项全部填充，参数：0表示为中断，GD_KTEXT表示kernel text，
+        //__vectors[i]表示对用的中断处理程序在代码段中的偏移，DPL_KERNEL表示为内核态
         for (i = 0; i < sizeof(idt) / sizeof(struct gatedesc); i++) {
           SETGATE(idt[i], 0, GD_KTEXT, __vectors[i], DPL_KERNEL);
         }
