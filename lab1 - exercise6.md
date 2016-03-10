@@ -22,6 +22,37 @@
   
   可知，一个表项占8 byte，0~1字节和6~7字节分别表示低16位和高16位的段内偏移，2~3字节表示的是段选择子。  
 2. 请编程完善kern/trap/trap.c中对中断向量表进行初始化的函数idt_init。在idt_init函数中，依次对所有中断入口进行初始化。使用mmu.h中的SETGATE宏，填充idt数组内容。每个中断的入口由tools/vectors.c生成，使用trap.c中声明的vectors数组即可。
+
+  ```C
+  void
+  idt_init(void) {
+        /* LAB1 YOUR CODE : STEP 2 */
+        /* (1) Where are the entry addrs of each Interrupt Service Routine (ISR)?
+         *     All ISR's entry addrs are stored in __vectors. where is uintptr_t __vectors[] ?
+         *     __vectors[] is in kern/trap/vector.S which is produced by tools/vector.c
+         *     (try "make" command in lab1, then you will find vector.S in kern/trap DIR)
+         *     You can use  "extern uintptr_t __vectors[];" to define this extern variable which will be used later.
+         * (2) Now you should setup the entries of ISR in Interrupt Description Table (IDT).
+         *     Can you see idt[256] in this file? Yes, it's IDT! you can use SETGATE macro to setup each item of IDT
+         * (3) After setup the contents of IDT, you will let CPU know where is the IDT by using 'lidt' instruction.
+         *     You don't know the meaning of this instruction? just google it! and check the libs/x86.h to know more.
+         *     Notice: the argument of lidt is idt_pd. try to find it!
+         */
+        extern uintptr_t __vectors[];
+        int i;
+        //将256个idt表项全部填充，参数：0表示为中断，GD_KTEXT表示kernel text，__vectors[i]表示对用的中断处理程序在代码段中的偏移，DPL_KERNEL表示为内核态
+        for (i = 0; i < sizeof(idt) / sizeof(struct gatedesc); i++) {
+          SETGATE(idt[i], 0, GD_KTEXT, __vectors[i], DPL_KERNEL);
+        }
+        //从用户态切换到内核态
+        // set for switch from user to kernel
+        SETGATE(idt[T_SWITCH_TOK], 0, GD_KTEXT, __vectors[T_SWITCH_TOK], DPL_USER);
+        // load the IDT
+        //加载IDT
+        lidt(&idt_pd);
+  }
+  ```
+  
 3. 请编程完善trap.c中的中断处理函数trap，在对时钟中断进行处理的部分填写trap函数中处理时钟中断的部分，使操作系统每遇到100次时钟中断后，调用print_ticks子程序，向屏幕上打印一行文字”100 ticks”。
 
 > 【注意】除了系统调用中断(T_SYSCALL)使用陷阱门描述符且权限为用户态权限以外，其它中断均使用特权级(DPL)为０的中断门描述符，权限为内核态权限；而ucore的应用程序处于特权级３，需要采用｀int 0x80`指令操作（这种方式称为软中断，软件中断，Tra中断，在lab5会碰到）来发出系统调用请求，并要能实现从特权级３到特权级０的转换，所以系统调用中断(T_SYSCALL)所对应的中断门描述符中的特权级（DPL）需要设置为３。
