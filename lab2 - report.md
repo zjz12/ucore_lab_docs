@@ -6,7 +6,7 @@
 
 #### 1.1 请在实验报告中简要说明你的设计实现过程。
 
-通过一个双向的链表list来管理空闲的内存块。对给定的init,memmap,alloc_pages和free_pages进行重写。
+通过一个双向的链表list来管理空闲的内存块。对给定的``init``,``memmap``,``alloc_pages``和``free_pages``进行重写。
 
 ``default_init`` : 对操作系统要用的数据结构进行初始化，包括对free_list链表和nr_free空闲页个数置0。
 
@@ -24,7 +24,7 @@
 
 #### 2.1 请在实验报告中简要说明你的设计实现过程。
 
-实现过程：实现函数get_pte(pde_t *pgdir, uintptr_t la, bool create);
+实现过程：实现函数``get_pte(pde_t *pgdir, uintptr_t la, bool create)``
 
 首先要查询一级页表，根据线性地址la在一级页表pgdir中寻找二级页表的起始地址。如果二级页表不存在，那么要根据参数create来分配二级页表的内存空间。
 
@@ -32,18 +32,19 @@ get_pte函数是通过PDT的基址pgdir和线性地址la来获取pte。PDX根据
 
 #### 2.2 请描述页目录项（Pag Director Entry）和页表（Page Table Entry）中每个组成部分的含义和以及对ucore而言的潜在用处。
 
-- PDE和PTE的组成（详见mmu.h文件）
+PDE和PTE的组成（详见mmu.h文件）
+
   ```
-  #define PTE_P           0x001                   // 当前项是否存在，用于判断缺页
-  #define PTE_W           0x002                   // 当前项是否可写，标志权限
-  #define PTE_U           0x004                   // 用户是否可获取，标志权限
-  #define PTE_PWT         0x008                   // 写直达缓存机制,硬件使用Write Through
-  #define PTE_PCD         0x010                   // 禁用缓存，硬件使用Cache-Disable
-  #define PTE_A           0x020                   // Accessed
-  #define PTE_D           0x040                   // 页是否被修改，硬件使用（dirty)
-  #define PTE_PS          0x080                   // 页大小
-  #define PTE_MBZ         0x180                   // 必须为0的位
-  #define PTE_AVAIL       0xE00                   // 软件使用的位，可任意设置
+  #define PTE_P           0x001 // 当前项是否存在，用于判断缺页
+  #define PTE_W           0x002 // 当前项是否可写，标志权限
+  #define PTE_U           0x004 // 用户是否可获取，标志权限
+  #define PTE_PWT         0x008 // 写直达缓存机制,硬件使用Write Through
+  #define PTE_PCD         0x010 // 禁用缓存，硬件使用Cache-Disable
+  #define PTE_A           0x020 // Accessed
+  #define PTE_D           0x040 // 页是否被修改，硬件使用（dirty)
+  #define PTE_PS          0x080 // 页大小
+  #define PTE_MBZ         0x180 // 必须为0的位
+  #define PTE_AVAIL       0xE00 // 软件使用的位，可任意设置
   ```
 
 #### 2.3 如果ucore执行过程中访问内存，出现了页访问异常，请问硬件要做哪些事情？
